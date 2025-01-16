@@ -1,8 +1,8 @@
 <?php 
 namespace App\Config;
 use PDO;
-use PDOException
-;class Database {
+use PDOException;
+class Database {
     private static $servername = "localhost";
     private static $username = "root";
     private static $password = "";

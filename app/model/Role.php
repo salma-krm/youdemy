@@ -68,8 +68,6 @@ class Role{
           return $this->setId(Database::getInstance()
           ->getConnection()
           ->lastInsertId());
-           
-         
         
         }
    

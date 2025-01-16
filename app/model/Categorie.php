@@ -3,8 +3,6 @@ namespace app\model;
 use app\config\Database;
 use PDO;
 class Categorie extends Label{
-
-
 public function __call($name, $arguments)
 {   if($name == "construct"){
     if(count($arguments)== 1)
@@ -26,7 +24,9 @@ public function  findAll(){
     $query="SELECT name ,description FROM categories ;";
     $stmt=Database::getInstance()->getConnection()->prepare($query);
     $stmt->execute();
+    echo "test";
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
 
 }
 public function create(){
@@ -34,6 +34,8 @@ public function create(){
     $stmt=Database::getInstance()->getConnection()->prepare($query);
     $stmt->execute();
 }
+
+
 public function findByName(string $name) {
     $query = "SELECT id , name , description FROM categories WHERE name = :name";
     $stmt = Database::getInstance()->getConnection()->prepare($query);
@@ -42,9 +44,42 @@ public function findByName(string $name) {
     $result= $stmt->fetchObject(__CLASS__);
     return $result;
 }
-public function update (){}
-public function delete (){}
-public  function findByID() {}
+
+
+
+
+public function update () {
+        
+    $query= "UPDATE utilisateurs SET name = :name,description=:description WHERE id = :id";
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    $stmt->bindParam(":name", $this->name);
+    $stmt->bindParam(":description", $this->description);
+    $stmt->bindParam("id", $this->id);
+     return $stmt->execute();
+
+    }
+
+
+
+
+
+public function delete ($id){
+    $query = "SELECT * FROM categories WHERE id = '" . $id . "';";
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    return $stmt->execute();
+}
+
+
+
+
+
+public  function findByID() {
+    $query = "SELECT * FROM categories WHERE id = :id";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(":id", $id);
+       $stmt->execute();
+       return  $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
 }
 

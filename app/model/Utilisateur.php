@@ -2,7 +2,6 @@
 namespace app\model;
 use app\config\Database;
 use PDO;
-
 class Utilisateur{
     private  int   $id = 0;
     private string  $firstname = "";
@@ -10,6 +9,7 @@ class Utilisateur{
     private string  $email = "";
     private string  $password="";
     private  string $passwordConfig;
+    private string $photo ;
     private Role $role ;
     private $cours  = [];
     public function __call($name, $arguments)
@@ -20,12 +20,13 @@ class Utilisateur{
                 $this->id=$arguments[1];  
 
             }
-            if(count ($arguments)== 5){
+            if(count ($arguments)== 6){
                 $this->firstname=$arguments[0];
                 $this->lastname=$arguments[1];     
                 $this->email=$arguments[2];
                 $this->password =$arguments[3];
-                $this->role=$arguments[4];  
+                $this->photo =$arguments[4];
+                $this->role=$arguments[5];  
             }
             if(count ($arguments)== 6){
                 $this->firstname=$arguments[0];
@@ -43,6 +44,9 @@ class Utilisateur{
     }}
     public function setId( int $id): void{
         $this->id=$id;
+    }
+    public function setPhoto( string $photo): void{
+        $this->photo=$photo;
     }
     public function setFirstName(string $firstname): void{
         $this->firstname=$firstname;
@@ -82,6 +86,10 @@ class Utilisateur{
     public function getRole(): Role{    
         return $this->role;
     }
+
+    public function getPhoto(): string{    
+        return $this->photo;
+    }
    public function __tostring() {
     
         return "(Utilisateur) => id : " . $this->id . " , firstname : " . $this->firstname . " , lastname : " . $this->lastname.",, email : " . $this->email  . " , password : " . $this->password . " , Role : " . $this->role. "" ;
@@ -91,19 +99,15 @@ class Utilisateur{
 
 
    public function findAll() {
-   
-        $query = "SELECT firstname, lastname, email, password, roleName, roledescription 
+        $query = "SELECT id ,photo,firstname, lastname, email, password, roleName, roledescription 
         FROM utilisateurs  LEFT JOIN roles ON utilisateurs.role_id = roles.id";
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
-    
 }
    public function create() {
-
     $roleId = $this->getRole()->getId(); 
     var_dump($this->getRole());
-    
     $query = "INSERT INTO utilisateurs (firstname , lastname, email, password, role_id) 
               VALUES (:firstname, :lastname, :email, :password, :id_role)";
     $stmt = Database::getInstance()->getConnection()->prepare($query);
@@ -149,11 +153,9 @@ class Utilisateur{
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
     
-}
    
-
+}
 
 
 ?>

@@ -1,4 +1,7 @@
+<?php
+?>
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -30,7 +33,7 @@ background: #eee;
           class="img-fluid" alt="Phone image">
       </div>
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-        <form>
+        <form mrthod ="POST" action="../app/controller/UtilisateurControllers" >
           <!-- Email input -->
           <div data-mdb-input-init class="form-outline mb-4">
           <label class="form-label" for="form1Example13">Email address</label>
@@ -46,16 +49,9 @@ background: #eee;
           </div>
 
           <div class="d-flex justify-content-around align-items-center mb-4">
-            <!-- Checkbox -->
-            <div class="form-check">
-           
-          </div>
-
-          <!-- Submit button -->
-          <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Sign in</button>
-
           
-
+          <!-- Submit button -->
+          <button type="submit"   name ="submit" value = "login" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block"><a href="../app/controller/UtilisateurControllers"></a>Sign in</button>
         </form>
       </div>
     </div>

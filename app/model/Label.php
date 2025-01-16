@@ -6,10 +6,6 @@ abstract class Label{
     protected  $description ;
 
     public function __construct(){}
-
-    
- 
-
     public function getId(): int{
         return $this->id;
     }

@@ -1,20 +1,71 @@
 <?php
 namespace app\model;
+use app\Config\Database;
+use PDO;
 class Tag extends Label {
-    protected  $logo;
+    
     public function __construct(){
         parent::__construct();
 
 }
-
-    public function getLogo() { 
-        return $this->logo;
+    public function  findAll(){
+        $query="SELECT name ,description FROM tag ;";
+        $stmt=Database::getInstance()->getConnection()->prepare($query);
+        $stmt->execute();
+        echo "test";
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+    
     }
-    public function setLogo($logo) {
-            $this->logo = $logo;
+    public function create(){
+        $query="INSERT INTO  tag (name,description) VALUES ('".$this->name."',".$this->description.")";
+        $stmt=Database::getInstance()->getConnection()->prepare($query);
+        $stmt->execute();
     }
-
-    public  function __tostring() {
-        parent::__tostring()."".$this->getLogo().""; 
+    
+    
+    public function findByName(string $name) {
+        $query = "SELECT id , name , description FROM tag WHERE name = :name";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(':name', $name);
+        $stmt->execute();
+        $result= $stmt->fetchObject(__CLASS__);
+        return $result;
+    }
+    
+    
+    
+    
+    public function update () {
+            
+        $query= "UPDATE tag SET name = :name,description=:description WHERE id = :id";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":description", $this->description);
+        $stmt->bindParam("id", $this->id);
+         return $stmt->execute();
+    
+        }
+    
+    
+    
+    
+    
+    public function delete ($id){
+        $query = "SELECT * FROM tag WHERE id = '" . $id . "';";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        return $stmt->execute();
+    }
+    
+    
+    
+    
+    
+    public  function findByID() {
+        $query = "SELECT * FROM tag WHERE id = :id";
+            $stmt = Database::getInstance()->getConnection()->prepare($query);
+            $stmt->bindParam(":id", $id);
+           $stmt->execute();
+           return  $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

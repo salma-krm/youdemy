@@ -1,9 +1,7 @@
 <?php
 namespace app\model;
-
-use App\Config\Database;
-
-
+use app\config\Database;
+use PDO;
 class Cours{
     private int  $id =0;
     private string  $titre= "";
@@ -95,8 +93,7 @@ class Cours{
         $categorieId = $this->categorie->getId();
         $enseignant = $this->getEnseignant()->getId();
         
-        $query="INSERT INTO cours (titre ,  description, photo, contenu,id_categorie , id_enseignant ) VALUES (:titre,:photo,:description,:contenu,:categorieId,:idenseignant)
-        ";
+        $query="INSERT INTO cours (titre ,  description, photo, contenu,id_categorie , id_enseignant ) VALUES (:titre,:photo,:description,:contenu,:categorieId,:idenseignant)";
         $stmt= Database::getInstance()->getConnection()->prepare($query);
         $stmt->bindParam(":titre", $this->titre);
         $stmt->bindParam(":photo",$this->photo);
@@ -106,9 +103,44 @@ class Cours{
         $stmt->bindParam (":idenseignant",$enseignant);
         return  $stmt->execute();
     }
-    public function getAll(){}
-    public function update () {}
-    public function delete () {}
-    public function findById () {}
+    public function getAll(){
+        echo'first';
+        $query = "SELECT cours.titre AS titre ,cours.photo AS photo,cours.description AS description ,cours.contenu AS contenu,categories.name AS categorieNname,
+         categories.description AS categorieDescription,utilisateurs.firstname AS enseignantFirstname FROM   cours
+          LEFT JOIN categories ON cours.id_categorie = categories.id
+          LEFT JOIN utilisateurs ON cours.id_enseignant = utilisateurs.id;";
+           echo'first 2';
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+         echo'first 3';
+         $stmt->execute();
+          $resultat= $stmt->fetchAll(PDO::FETCH_ASSOC);
+          return $resultat;
+          
+        
+    }
+    public function update () {
+        $query= "UPDATE cours SET photo = :photo, titre=:titre,description=:description,contenu=:contenu WHERE id = :id";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(":firstname", $this->photo);
+        $stmt->bindParam(":lastname", $this->titre);
+        $stmt->bindParam(":email", $this->description);
+        $stmt->bindParam(":password", $this->contenu);
+        $stmt->bindParam("id", $this->id);
+         return $stmt->execute();
+    }
+    public function delete ($id){
+        $query = "SELECT * FROM Cours WHERE id = '" . $id . "';";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        return $stmt->execute();
+    }
+    public function findById ($id) {
+        $query = "SELECT * FROM cours WHERE id = :id";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(":id", $id);
+       $stmt->execute();
+       return  $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }  
+
 ?>
+

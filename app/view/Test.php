@@ -1,10 +1,11 @@
 <?php
 namespace app\view;
 use app\model\Categorie;
-use Exception;
+
 use app\model\Role;
 use app\model\Utilisateur;
 use app\model\Cours;
+
 
 echo "test";
 
@@ -38,6 +39,10 @@ class Test
         $cours->create();
         
 
+    }
+    public function testcourses(){
+        $user = new Cours();
+        $user->getAll();
     }
 
     

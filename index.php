@@ -4,7 +4,8 @@ use app\controller\UtilisateurControllers;
 use app\model\Utilisateur;
 use app\view\Test;
 $test = new Test();
-$test->testcours();
+$test->testcourses();
+var_dump($test);
 
 // $route = $_GET["route"] ?? "home";
 

@@ -1,6 +1,5 @@
 <?php
 require dirname(__DIR__, 2).'/vendor/autoload.php';
-
 use app\controller\UtilisateurControllers;
 $user  = new UtilisateurControllers();
 $users = $user->findAll();
@@ -103,7 +102,7 @@ $users = $user->findAll();
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="return confirm('Are you sure you want to logout?')">
+                        <a class="nav-link" href="#./login.php" onclick="return confirm('Are you sure you want to logout?')">
                             <i class="bi bi-box-arrow-left"></i> Logout
                         </a>
                     </li>
@@ -205,7 +204,7 @@ $users = $user->findAll();
                                 <tr >
                                 
                                     <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
+                                        <img alt="..." src=<?php echo ($userr->photo); ?> class="avatar avatar-sm rounded-circle me-2">
                                         <a class="text-heading font-semibold" href="#">
                                         <?php echo ($userr->firstname); ?>
                                         </a>
@@ -214,8 +213,7 @@ $users = $user->findAll();
                                     <?php echo ($userr->lastname); ?>
                                     </td>
                                     <td>
-                                        <img alt="..." src="https://bytewebster.com/img/logo.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="https://www.bytewebster.com/">
+                                        
                                         <?php echo ($userr->email); ?>
                                     </td>
                                     <td>
@@ -226,13 +224,7 @@ $users = $user->findAll();
                                         <?php echo ($userr->roledescription); ?>
                                         </span>
                                     </td>
-                                    
                                     <td class="text-end">
-                                        
-
-                                        <button type="button" onclick="showSweetAlert()" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                        <i class="bi bi-pencil"></i>
-                                        </button>
                                         <button type="button" onclick="showSweetAlert()" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i class="bi bi-trash"></i>
                                         </button>
