@@ -9,18 +9,22 @@ class Tag extends Label {
 
 }
     public function  findAll(){
-        $query="SELECT name ,description FROM tag ;";
+        $query="SELECT id, name ,description FROM tag ;";
         $stmt=Database::getInstance()->getConnection()->prepare($query);
         $stmt->execute();
-        echo "test";
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
         
     
     }
     public function create(){
-        $query="INSERT INTO  tag (name,description) VALUES ('".$this->name."',".$this->description.")";
+        echo"test1";
+        $query="INSERT INTO  tag (name,description) VALUES (:name,:description)";
         $stmt=Database::getInstance()->getConnection()->prepare($query);
-        $stmt->execute();
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":description",$this->description);
+        echo"test2";
+        return  $stmt->execute();  
     }
     
     
@@ -51,12 +55,13 @@ class Tag extends Label {
     
     
     
-    public function delete ($id){
-        $query = "SELECT * FROM tag WHERE id = '" . $id . "';";
-        $stmt = Database::getInstance()->getConnection()->prepare($query);
-        return $stmt->execute();
-    }
-    
+        public function delete ($id) {
+   
+            $query = "DELETE FROM tag WHERE id = :id";
+            $stmt = Database::getInstance()->getConnection()->prepare($query);
+            $stmt->bindParam(":id", $id);
+            return $stmt->execute();
+        }
     
     
     

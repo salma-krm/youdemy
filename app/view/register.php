@@ -1,87 +1,189 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
+<html lang="fr">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
- </head>
- <body class ="d-flex justify-content-center">
-    <!-- Section: Design Block -->
-<section class="text-center text-lg-start">
-  <style>
-    .cascading-right {
-      margin-right: -50px;
-    }
+    <title>Youdemy - Inscription & Connexion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-    @media (max-width: 991.98px) {
-      .cascading-right {
-        margin-right: 0;
-      }
-    }
-  </style>
+        body {
+            background-color: #f5f6fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-  <!-- Jumbotron -->
-  <div class="container py-4">
-    <div class="row g-0 align-items-center">
-      <div class="col-lg-6 mb-5 mb-lg-0">
-        <div class="card cascading-right bg-body-tertiary" style="
-            backdrop-filter: blur(30px);
-            ">
-          <div class="card-body p-5 shadow-5 text-center">
-            <h2 class="fw-bold mb-5">Sign up now</h2>
-            <form action= "" method="POST">
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-                    <input type="text" name="fname" id="form3Example1" class="form-control" />
-                    <label class="form-label" for="form3Example1">First name</label>
-                  </div>
+        .forms-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .form-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .role-selection {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+
+        .role-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .role-option input[type="radio"] {
+            cursor: pointer;
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        .role-option label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .form-footer {
+            margin-top: 1rem;
+            text-align: center;
+            color: #7f8c8d;
+        }
+
+        .form-footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .password-requirements {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="forms-container">
+        <!-- Formulaire d'inscription -->
+        <div class="form-box">
+            <h2 class="form-title">Créer un compte</h2>
+            <form  method ="POST" action="../../index.php"  id="signup-form">
+            <div class="form-group">
+                    <label for="signup-name">Nom </label>
+                    <input   name="nom" id="nom" type="text" id="signup-name" required>
                 </div>
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-                    <input type="text"  name="lname"  id="form3Example2" class="form-control" />
-                    <label class="form-label" for="form3Example2">Last name</label>
-                  </div>
+                <div class="form-group">
+                    <label for="signup-name">Prenom </label>
+                    <input   name="prenom" id="prenom" type="text" id="signup-name" required>
                 </div>
-              </div>
-
-              <!-- Email input -->
-              <div data-mdb-input-init class="form-outline mb-4">
-                <input type="email"   name="email" id="form3Example3" class="form-control" />
-                <label class="form-label" for="form3Example3">Email address</label>
-              </div>
-
-              <!-- Password input -->
-              <div data-mdb-input-init class="form-outline mb-4">
-                <input type="password"  name="pasword"  id="form3Example4" class="form-control" />
-                <label class="form-label" for="form3Example4">Password</label>
-              </div>
-
-              <!-- Checkbox -->
-              <div class="form-check d-flex justify-content-center mb-4">
-                
-                <p>I have an account, <a href="./login.php">login</a>.</p>
-              </div>
-
-              <!-- Submit button -->
-              <button type="submit" name="registre" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
-                Sign up
-              </button>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input  name="email" id="email" type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Je suis</label>
+                    <div class="role-selection">
+                        <div class="role-option">
+                            <input  name="role" id="role" type="radio" id="role-student" name="role" value="student" checked>
+                            <label for="role-student">Étudiant</label>
+                        </div>
+                        <div class="role-option">
+                            <input  name="role" id="role" type="radio" id="role-teacher" name="role" value="teacher">
+                            <label for="role-teacher">Enseignant</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Mot de passe</label>
+                    <input type="password" id="signup-password" required>
+                    <div class="password-requirements">
+                        Le mot de passe doit contenir au moins 8 caractères
+                    </div>
+                </div>
+                <button name ="submit " type="submit" name ="submit" class="submit-btn">S'inscrire</button>
+                <div class="form-footer">
+                    Déjà un compte ? <a href="./login.php">Se connecter</a>
+                </div>
             </form>
-          </div>
         </div>
-      </div>
 
-      
+       
     </div>
-  </div>
-  <!-- Jumbotron -->
-</section>
-<!-- Section: Design Block -->
- </body>
- </html>
+</body>
+</html>

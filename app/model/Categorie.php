@@ -10,10 +10,8 @@ public function __call($name, $arguments)
         $this->name=$arguments[0];
         
     }
-        if(count($arguments)== 3)
+        if(count($arguments)== 2)
         {
-            $this->id=$arguments[0];
-
             $this->name=$arguments[1];
             $this->description=$arguments[2];
         }
@@ -21,22 +19,29 @@ public function __call($name, $arguments)
 
 
 public function  findAll(){
-    $query="SELECT name ,description FROM categories ;";
+    $query="SELECT id , name ,description FROM categories ;";
     $stmt=Database::getInstance()->getConnection()->prepare($query);
     $stmt->execute();
-    echo "test";
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
     
 
 }
 public function create(){
-    $query="INSERT INTO  categories (name,description) VALUES ('".$this->name."',".$this->description.")";
+    echo"test1";
+    $query="INSERT INTO  categories (name,description) VALUES (:name,:description)";
     $stmt=Database::getInstance()->getConnection()->prepare($query);
-    $stmt->execute();
+    $stmt->bindParam(":name", $this->name);
+    $stmt->bindParam(":description",$this->description);
+    echo"test2";
+    return  $stmt->execute();
+     
+      
+     
 }
 
 
 public function findByName(string $name) {
+    
     $query = "SELECT id , name , description FROM categories WHERE name = :name";
     $stmt = Database::getInstance()->getConnection()->prepare($query);
     $stmt->bindParam(':name', $name);
@@ -49,38 +54,42 @@ public function findByName(string $name) {
 
 
 public function update () {
-        
-    $query= "UPDATE utilisateurs SET name = :name,description=:description WHERE id = :id";
+        $query = "UPDATE categories SET name = :name, description = :description WHERE id = :id";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":description", $this->description);
+        $stmt->bindParam(":id", $this->id);
+        return $stmt->execute();
+}
+
+public function delete ($id) {
+   
+    $query = "DELETE FROM categories WHERE id = :id";
     $stmt = Database::getInstance()->getConnection()->prepare($query);
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":description", $this->description);
-    $stmt->bindParam("id", $this->id);
-     return $stmt->execute();
-
-    }
-
-
-
-
-
-public function delete ($id){
-    $query = "SELECT * FROM categories WHERE id = '" . $id . "';";
-    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    
+    
+    $stmt->bindParam(":id", $id);
+    
+   
     return $stmt->execute();
 }
 
-
-
-
-
-public  function findByID() {
+public function findByID($id) {
+    
     $query = "SELECT * FROM categories WHERE id = :id";
-        $stmt = Database::getInstance()->getConnection()->prepare($query);
-        $stmt->bindParam(":id", $id);
-       $stmt->execute();
-       return  $stmt->fetch(PDO::FETCH_ASSOC);
-}
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    
+   
+    $stmt->bindParam(":id", $id);
+    
+  
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ); 
 
+
+
+
+}
 }
 
 ?>

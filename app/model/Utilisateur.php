@@ -2,6 +2,7 @@
 namespace app\model;
 use app\config\Database;
 use PDO;
+#[\AllowDynamicProperties]
 class Utilisateur{
     private  int   $id = 0;
     private string  $firstname = "";
@@ -9,15 +10,21 @@ class Utilisateur{
     private string  $email = "";
     private string  $password="";
     private  string $passwordConfig;
-    private string $photo ;
+    private string $statut;
+   
     private Role $role ;
     private $cours  = [];
+  public function __construct(){
+    $this->role = new Role();
+  }
     public function __call($name, $arguments)
     {   if($name == "construct"){
-            if(count($arguments)== 1)
+            if(count($arguments)== 3)
             {
                 $this->role=$arguments[0];
-                $this->id=$arguments[1];  
+                $this->password=$arguments[1];  
+                $this->email=$arguments[2];  
+
 
             }
             if(count ($arguments)== 6){
@@ -25,8 +32,9 @@ class Utilisateur{
                 $this->lastname=$arguments[1];     
                 $this->email=$arguments[2];
                 $this->password =$arguments[3];
-                $this->photo =$arguments[4];
-                $this->role=$arguments[5];  
+                $this->role =$arguments[4];
+                $this->status=$arguments[5];
+                
             }
             if(count ($arguments)== 6){
                 $this->firstname=$arguments[0];
@@ -45,9 +53,9 @@ class Utilisateur{
     public function setId( int $id): void{
         $this->id=$id;
     }
-    public function setPhoto( string $photo): void{
-        $this->photo=$photo;
-    }
+  public function setStatus( string $status ): void{
+    $this->statut=$status;
+  }
     public function setFirstName(string $firstname): void{
         $this->firstname=$firstname;
     }
@@ -74,7 +82,7 @@ class Utilisateur{
     public function getFirstName(): string{
         return $this->firstname;
     }
-    public function get(): string{
+    public function getLastName(): string{
         return $this->lastname;
     }
     public function getEmail(): string{
@@ -86,10 +94,11 @@ class Utilisateur{
     public function getRole(): Role{    
         return $this->role;
     }
-
-    public function getPhoto(): string{    
-        return $this->photo;
+    public function getStatus(): string{
+        return $this->statut;
     }
+
+  
    public function __tostring() {
     
         return "(Utilisateur) => id : " . $this->id . " , firstname : " . $this->firstname . " , lastname : " . $this->lastname.",, email : " . $this->email  . " , password : " . $this->password . " , Role : " . $this->role. "" ;
@@ -99,8 +108,8 @@ class Utilisateur{
 
 
    public function findAll() {
-        $query = "SELECT id ,photo,firstname, lastname, email, password, roleName, roledescription 
-        FROM utilisateurs  LEFT JOIN roles ON utilisateurs.role_id = roles.id";
+        $query = "SELECT  status ,firstname, lastname, email, password, roleName, roledescription 
+        FROM utilisateurs LEFT JOIN roles ON utilisateurs.role_id = roles.id";
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -118,7 +127,7 @@ class Utilisateur{
     $stmt->bindParam(':id_role', $roleId, );
     return $stmt->execute();
     
-} 
+}   
     public function update () {
         
     $query= "UPDATE utilisateurs SET firstname = :firtsname, lastname=:lastname,email=:email,password=:password WHERE id = :id";
@@ -147,14 +156,43 @@ class Utilisateur{
     }
 
     public function checkEmail($email){
-        $query='SELECT  firstname, lastname, email ,password  from Users where email = :email';
+        $query='SELECT id, firstname, lastname, email ,password ,role_id from utilisateurs where email = :email';
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->bindParam(':email',$email);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+         return $stmt->fetchObject(__CLASS__);
     }
+    public function login($email, $password) {
+        // Récupérer l'utilisateur par email
+        $result = $this->checkEmail($email);
+        
+        // Vérifier si l'utilisateur existe
+        if (!$result) {
+            return false;
+        }
     
-   
+        // Créer un nouvel objet Utilisateur avec les données
+        $user = new Utilisateur();
+        $user->setId($result->id);
+        $user->setFirstName($result->firstname);
+        $user->setLastName($result->lastname);
+        $user->setEmail($result->email);
+        $user->setPassword($result->password);
+        
+        // Récupérer et définir le rôle
+        $role = new Role();
+        $roleData = $role->findRoleById($result->role_id);
+        $user->setRole($roleData);
+        echo"hhhh";
+    
+        if ($result && $password== $result->password) {
+            return $result;
+        } else {
+            return false;
+        }
+        
+        
+    }
 }
 
 

@@ -19,10 +19,12 @@ class Role{
                 $this->roleName=$arguments[0];
                 $this->roleDescription=$arguments[1];
             }
-            if(count ($arguments)== 2){
+            if(count ($arguments)== 3){
                
                 $this->roleName=$arguments[0];     
                 $this->roleDescription=$arguments[1];
+                $this->id=$arguments[2];
+
 
                 
             }
@@ -84,6 +86,6 @@ class Role{
             $stmt = Database::getInstance()->getConnection()->prepare($query);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
-            return $stmt->fetchObject( PDO::FETCH_OBJ);
+            return $stmt->fetchObject(__CLASS__);
         }
 }

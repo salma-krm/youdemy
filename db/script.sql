@@ -16,6 +16,7 @@ CREATE TABLE utilisateurs(
     firstname VARCHAR(30),
     lastname VARCHAR(30),
     email VARCHAR(50) UNIQUE,
+    status ENUM ('active','desactive');
     password VARCHAR(50),
     role_id INT ,
     Foreign Key (role_id) REFERENCES roles(id)

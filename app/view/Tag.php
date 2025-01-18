@@ -1,8 +1,9 @@
 <?php
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
-use app\controller\UtilisateurControllers;
-$user = new UtilisateurControllers();
-$users = $user->findAll();
+use app\controller\TagControllers;
+$tags = new TagControllers();
+ $tags = $tags->findAll();
+
 
 ?>
 <!DOCTYPE html>
@@ -31,9 +32,9 @@ $users = $user->findAll();
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <!-- Brand -->
-                <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
-                    <h3 class="text-success"><img src="" width="40"><span class="text-info">YOU</span>Demy</h3>
-                </a>
+
+                <h3 class="text-success"><img src="" width="40"><span class="text-info">YOU</span>Demy</h3>
+
                 <!-- User menu (mobile) -->
                 <div class="navbar-user d-lg-none">
                     <!-- Dropdown -->
@@ -107,7 +108,8 @@ $users = $user->findAll();
                     <!-- User (md) -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="./login.php">
+                            <a class="nav-link" href="#./login.php"
+                                onclick="return confirm('Are you sure you want to logout?')">
                                 <i class="bi bi-box-arrow-left"></i> Logout
                             </a>
                         </li>
@@ -129,13 +131,13 @@ $users = $user->findAll();
                             <!-- Actions -->
                             <div class="col-sm-6 col-12 text-sm-end">
                                 <div class="mx-n1">
-                                    <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                                    <button class="btn d-inline-flex btn-sm btn-primary mx-1" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         <span class=" pe-2">
                                             <i class="bi bi-plus"></i>
                                         </span>
                                         <span>Create</span>
-                                    </a>
-
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -161,6 +163,7 @@ $users = $user->findAll();
                     <div class="row g-6 mb-6">
                         <div class="col-xl-3 col-sm-6 col-12">
                             <div class="card shadow border-0">
+
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-12">
@@ -187,51 +190,35 @@ $users = $user->findAll();
                             <table class="table table-hover table-nowrap">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">firstname</th>
-                                        <th scope="col">lastname</th>
-                                        <th scope="col">email</th>
-                                        <th scope="col">role</th>
+                                        <th scope="col">name</th>
                                         <th scope="col">description</th>
-                                        <th>statut</th>
                                         <th></th>
 
                                     </tr>
                                 </thead>
                                 <div class="d-flex flex-column">
-                                    <?php foreach ($users as $userr): ?>
+                                    <?php foreach ($tags as $tag): ?>
                                         <tbody>
-
                                             <tr>
+                                                <td>
+                                                    <?php echo ($tag->name); ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo ($tag->description); ?>
+                                                </td>
 
-                                                <td>
-                                                    
-                                                    <a class="text-heading font-semibold" href="#">
-                                                        <?php echo ($userr->firstname); ?>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <?php echo ($userr->lastname); ?>
-                                                </td>
-                                                <td>
-
-                                                    <?php echo ($userr->email); ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo ($userr->roleName); ?>
-                                                </td>
-                                                <td>
-                                                    <span class="badge badge-lg badge-dot">
-                                                        <?php echo ($userr->roledescription); ?>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <?php echo ($userr->status); ?>
-                                                </td>
                                                 <td class="text-end">
-                                                    <button type="button" onclick="showSweetAlert()"
+                                                    <button class="btn btn-sm btn-square btn-neutral text-danger-hover"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal<?= ($tag->id); ?>">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </button>
+                                                    <a href="../../index.php?id=<?= ($tag->id); ?>"
+                                                        class="btn btn-sm btn-square btn-neutral text-danger-hover"
+                                                        onclick="showSweetAlert()"
                                                         class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                                         <i class="bi bi-trash"></i>
-                                                    </button>
+                                                    </a>
                                                 </td>
 
                                             </tr>
@@ -239,10 +226,86 @@ $users = $user->findAll();
                                     <?php endforeach; ?>
                                 </div>
                             </table>
+                            <?php
+                            foreach ($tags as $tag) {
+                                ?>
+                                <div class="modal fade" id="exampleModal<?= ($tag->id); ?>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">update contact</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                            <form name="player" id="addPlayr" method="post"
+                                                    action="http://localhost:8081/youdemy/index.php?id=<?= ($tag->id); ?>">
+                                                    <div class="bg-light p-4 rounded shadow-sm">
+                                                        <h2 class="mb-4">Add categorie</h2>
+                                                        <input type="hidden" name="id" value="<?=$tag->id?>" >
+                                                        <div class="mb-3">
+                                                            <label for="name" class="form-label">Name</label>
+                                                            <input type="text" value="<?= ($tag->name); ?>" name="name"
+                                                                id="name" class="form-control"
+                                                                placeholder="Enter votre name" required />
+                                                            <!-- <div id="nameErr" class="text-danger"></div> -->
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="rating" class="form-label">description</label>
+                                                            <input type="text" name="description" id="description"
+                                                                value="<?= ($tag->description); ?>" class="form-control"
+                                                                placeholder="Enter your description" required />
+                                                            <!-- <div id="ratingErr" class="text-danger"></div> -->
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" name="submit" class="btn btn-primary">Save
+                                                    changes</button>
+                                            </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <!--  ajouter une categories -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter categorie</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method='POST' action="../../index.php">
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" name="nom" id="nom"
+                                aria-describedby="nomUtilisateur">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">description</label>
+                            <input type="text" class="form-control" name="description" id="description"
+                                aria-describedby="nomUtilisateur">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" name="submit" class=" btn btn-success">Ajouter Categorie</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

@@ -4,7 +4,7 @@ use app\model\Categorie;
 
 use app\model\Role;
 use app\model\Utilisateur;
-use app\model\Cours;
+use app\controller\CoursControllers;
 
 
 echo "test";
@@ -41,7 +41,7 @@ class Test
 
     }
     public function testcourses(){
-        $user = new Cours();
+        $user = new CoursControllers();
         $user->getAll();
     }
 

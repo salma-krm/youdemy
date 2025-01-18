@@ -2,6 +2,7 @@
 namespace app\model;
 use app\config\Database;
 use PDO;
+#[\AllowDynamicProperties]
 class Cours{
     private int  $id =0;
     private string  $titre= "";
@@ -35,7 +36,7 @@ class Cours{
             $this->categorie=$arguments[2];
         }
 
-        if(count($arguments)==6)
+        if(count($arguments)==7)
         {
 
             $this->titre=$arguments[0];
@@ -44,8 +45,19 @@ class Cours{
             $this->contenu=$arguments[3];
             $this->categorie=$arguments[4];
             $this->enseignant=$arguments[5];
+            $this->tags=$arguments[6];
         }
     }}
+    public function getcontenu():string{
+        return $this->contenu;
+
+    }
+    public function getDescription():string{
+        return $this->description;
+    }
+    public function getPhoto(): string{
+        return $this->photo;
+    }
     public function getId(): int {
         return $this->id;
     }
@@ -74,13 +86,22 @@ class Cours{
         $this->categorie=$categorie;
     }
     public function setTag($tag): void{
-        $this->tag=$tag;
+        $this->tags=$tag;
     }
     public function setEtudiant($etudiants): void{
         $this->etudiants=$etudiants;
     }
     public function setEnseignant( Utilisateur $enseignant): void{
         $this->enseignant=$enseignant;
+    }
+    public function setPhoto( $photo):void {
+        $this->photo=$photo;
+    }
+    public function setcontenu($contenu): void{
+        $this->contenu=$contenu;
+    }
+    public function setDescription($description): void{
+        $this->description=$description;
     }
     public function __toString()
     {
@@ -92,7 +113,6 @@ class Cours{
     public function create (){
         $categorieId = $this->categorie->getId();
         $enseignant = $this->getEnseignant()->getId();
-        
         $query="INSERT INTO cours (titre ,  description, photo, contenu,id_categorie , id_enseignant ) VALUES (:titre,:photo,:description,:contenu,:categorieId,:idenseignant)";
         $stmt= Database::getInstance()->getConnection()->prepare($query);
         $stmt->bindParam(":titre", $this->titre);
@@ -103,21 +123,26 @@ class Cours{
         $stmt->bindParam (":idenseignant",$enseignant);
         return  $stmt->execute();
     }
-    public function getAll(){
-        echo'first';
-        $query = "SELECT cours.titre AS titre ,cours.photo AS photo,cours.description AS description ,cours.contenu AS contenu,categories.name AS categorieNname,
-         categories.description AS categorieDescription,utilisateurs.firstname AS enseignantFirstname FROM   cours
-          LEFT JOIN categories ON cours.id_categorie = categories.id
-          LEFT JOIN utilisateurs ON cours.id_enseignant = utilisateurs.id;";
-           echo'first 2';
+    public function findAll()
+    {
+        $query = 'select  cours.id as id ,cours.titre  as titre ,cours.photo as photo ,cours.description as description ,
+        cours.contenu as contenu , utilisateurs.firstname as user , categories.name as cat 
+         FROM cours join utilisateurs  on 
+         cours.id_enseignant=utilisateurs.id join categories  on cours.id_categorie=categories.id;';
         $stmt = Database::getInstance()->getConnection()->prepare($query);
-         echo'first 3';
-         $stmt->execute();
-          $resultat= $stmt->fetchAll(PDO::FETCH_ASSOC);
-          return $resultat;
-          
-        
-    }
+        $stmt->execute();
+        $cours=$stmt->fetchAll(PDO::FETCH_CLASS, Cours::class);
+       
+        foreach ($cours as $cour):
+            $sql = "select t.name  from tag t  join courstags c on t.id=c.id_tags  where c.id_cours=:id";
+            $stmt = Database::getInstance()->getConnection()->prepare($sql);
+            $stmt->bindParam(':id', $cour->id);
+            $stmt->execute();
+            $cour->tags= $stmt->fetchAll(PDO::FETCH_CLASS, Tag::class);
+            endforeach;
+          return $cours;
+    } 
+    
     public function update () {
         $query= "UPDATE cours SET photo = :photo, titre=:titre,description=:description,contenu=:contenu WHERE id = :id";
         $stmt = Database::getInstance()->getConnection()->prepare($query);

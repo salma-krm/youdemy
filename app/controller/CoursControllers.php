@@ -1,8 +1,9 @@
-<?php 
+<?php
 namespace app\controller;
 use app\model\Cours;
-use app\config\Database;
-class CoursControllers{
+
+class CoursControllers
+{
     private $Coursmodel;
 
     public function __construct()
@@ -10,16 +11,28 @@ class CoursControllers{
         $this->Coursmodel = new Cours();
 
     }
-    public function findAll(){
+    public function findAll()
+    {
         $cours = $this->Coursmodel->findAll();
         return $cours;
     }
-   public function create (){
-    $this->Coursmodel->create();
+    public function create()
+    {
+        $this->Coursmodel->create();
+        header('location:../view/cours.php');
+    }
+    public function delete()
+    {
+        if (isset($_GET['id'])) {
+            $this->Coursmodel->delete($_GET['id']);
+            header('location:../view/cours.php');
+
+
+        }
+
+    }
 }
-}
-$cours = new CoursControllers();
-$cours->findAll();
+
 
 
 ?>
