@@ -38,7 +38,6 @@ class CategorieControllers
     {
         echo "wiwi";
         if ($_SERVER["REQUEST_METHOD"]) {
-
             $this->CategorieModel->setName($_POST['name']);
             $this->CategorieModel->setId($_POST['id']);
             $this->CategorieModel->setDescription($_POST['description']);
