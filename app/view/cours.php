@@ -3,12 +3,7 @@ require dirname(__DIR__, 2) . '/vendor/autoload.php';
 use app\controller\CoursControllers;
 $cours = new CoursControllers();
 $courses = $cours->findAll();
-use app\controller\CategorieControllers;
-$cat = new CategorieControllers();
-$cats = $cat->findAll();
-use app\controller\TagControllers;
-$tags = new TagControllers();
-$tags = $tags->findAll();
+
 
 ?>
 <!DOCTYPE html>
@@ -45,7 +40,8 @@ $tags = $tags->findAll();
 
         .card .card-img-top {
             object-fit: cover;
-            height: 180px;
+            height: 140px;
+            
             transition: transform 0.3s ease;
         }
 

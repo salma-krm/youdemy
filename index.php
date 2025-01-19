@@ -6,8 +6,7 @@ session_start();
 use app\controller\CategorieControllers;
 use app\controller\HomeController;
 use app\controller\AuthController;
-$userControllers= new TagControllers();
- $userControllers->update();
+
 
 
 // use app\model\Utilisateur;
@@ -18,7 +17,19 @@ $userControllers= new TagControllers();
 
 $route = $_GET["route"] ?? "home";
 
-if ($_SERVER["REQUEST_METHOD"] != "post") {
+if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
+     
+    
+    switch ($route) {
+         
+        case "register":
+            $controller = new AuthController();
+            $controller->register();
+         break;
+        
+    }
+}
+else{
     switch ($route) {
         case "home":
             $controller = new HomeController;

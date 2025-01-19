@@ -116,7 +116,6 @@ class Utilisateur{
 }
    public function create() {
     $roleId = $this->getRole()->getId(); 
-    var_dump($this->getRole());
     $query = "INSERT INTO utilisateurs (firstname , lastname, email, password, role_id) 
               VALUES (:firstname, :lastname, :email, :password, :id_role)";
     $stmt = Database::getInstance()->getConnection()->prepare($query);
@@ -124,7 +123,7 @@ class Utilisateur{
     $stmt->bindParam(':lastname', $this->lastname);
     $stmt->bindParam(':email', $this->email);
     $stmt->bindParam(':password', $this->password);
-    $stmt->bindParam(':id_role', $roleId, );
+    $stmt->bindParam(':id_role', $roleId);
     return $stmt->execute();
     
 }   

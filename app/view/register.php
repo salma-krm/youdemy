@@ -139,18 +139,29 @@
     </style>
 </head>
 <body>
+  <?php 
+  session_start();
+    if(isset($_SESSION["message_error"])):
+  ?>
+  <div class="text-3xl" >
+    <?= $_SESSION["message_error"] ?>
+  </div>
+  <?php
+    unset( $_SESSION["message_error"]);
+  endif;
+  ?>
     <div class="forms-container">
         <!-- Formulaire d'inscription -->
         <div class="form-box">
             <h2 class="form-title">Créer un compte</h2>
-            <form  method ="POST" action="../../index.php"  id="signup-form">
+            <form  method ="POST" action="http://localhost:8081/youdemy/index.php?route=register"  id="signup-form">
             <div class="form-group">
                     <label for="signup-name">Nom </label>
-                    <input   name="nom" id="nom" type="text" id="signup-name" required>
+                    <input   name="firstname" id="nom" type="text" id="signup-name" required>
                 </div>
                 <div class="form-group">
                     <label for="signup-name">Prenom </label>
-                    <input   name="prenom" id="prenom" type="text" id="signup-name" required>
+                    <input   name="lastname" id="prenom" type="text" id="signup-name" required>
                 </div>
                 <div class="form-group">
                     <label for="signup-email">Email</label>
@@ -160,23 +171,24 @@
                     <label>Je suis</label>
                     <div class="role-selection">
                         <div class="role-option">
-                            <input  name="role" id="role" type="radio" id="role-student" name="role" value="student" checked>
+                            <input  name="role" id="role" type="radio" id="role-student" name="role" value="etudiant" checked>
                             <label for="role-student">Étudiant</label>
                         </div>
                         <div class="role-option">
-                            <input  name="role" id="role" type="radio" id="role-teacher" name="role" value="teacher">
+                            <input  name="role" id="role" type="radio" id="role-teacher" name="role" value="enseignat">
                             <label for="role-teacher">Enseignant</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="signup-password">Mot de passe</label>
-                    <input type="password" id="signup-password" required>
+                    <input type="password" name="password" id="signup-password" required>
                     <div class="password-requirements">
                         Le mot de passe doit contenir au moins 8 caractères
                     </div>
                 </div>
-                <button name ="submit " type="submit" name ="submit" class="submit-btn">S'inscrire</button>
+                <!-- <input type="submit"> -->
+                <button name="submit" type="submit" class="submit-btn">S'inscrire</button>
                 <div class="form-footer">
                     Déjà un compte ? <a href="./login.php">Se connecter</a>
                 </div>
