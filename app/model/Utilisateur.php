@@ -9,9 +9,8 @@ class Utilisateur{
     private  string  $lastname ="";
     private string  $email = "";
     private string  $password="";
-    private  string $passwordConfig;
     private string $statut;
-   
+    
     private Role $role ;
     private $cours  = [];
   public function __construct(){
@@ -68,9 +67,7 @@ class Utilisateur{
     public function setPassword(string $password): void{
         $this->password=$password;
     }
-    public function setPasswordCOonfig(string $passwordConfig): void{  
-        $this->passwordConfig=$passwordConfig;
-    }
+  
     
     public function setRole(Role $role):void {
         $this->role = $role;
@@ -88,8 +85,8 @@ class Utilisateur{
     public function getEmail(): string{
         return $this->email;
     }
-    public function getPasswordCOonfig(): string{
-        return $this->passwordConfig;
+    public function getPassword(): string{
+        return $this->password;
     }
     public function getRole(): Role{    
         return $this->role;
@@ -108,7 +105,7 @@ class Utilisateur{
 
 
    public function findAll() {
-        $query = "SELECT  status ,firstname, lastname, email, password, roleName, roledescription 
+        $query = "SELECT utilisateurs.id as id , status ,firstname, lastname, email, password, roleName, roledescription 
         FROM utilisateurs LEFT JOIN roles ON utilisateurs.role_id = roles.id";
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->execute();
@@ -149,7 +146,7 @@ class Utilisateur{
 
 
     public function delete ($id) {
-        $query = "SELECT * FROM roles WHERE id = '" . $id . "';";
+        $query = "DELETE  FROM utilisateurs WHERE id = '" . $id . "';";
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         return $stmt->execute();
     }
@@ -162,28 +159,22 @@ class Utilisateur{
          return $stmt->fetchObject(__CLASS__);
     }
     public function login($email, $password) {
-        // Récupérer l'utilisateur par email
+        
         $result = $this->checkEmail($email);
         
-        // Vérifier si l'utilisateur existe
+        
         if (!$result) {
             return false;
         }
-    
-        // Créer un nouvel objet Utilisateur avec les données
         $user = new Utilisateur();
         $user->setId($result->id);
         $user->setFirstName($result->firstname);
         $user->setLastName($result->lastname);
         $user->setEmail($result->email);
         $user->setPassword($result->password);
-        
-        // Récupérer et définir le rôle
         $role = new Role();
         $roleData = $role->findRoleById($result->role_id);
         $user->setRole($roleData);
-        echo"hhhh";
-    
         if ($result && $password== $result->password) {
             return $result;
         } else {

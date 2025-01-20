@@ -115,7 +115,7 @@
         <!-- Formulaire de connexion -->
         <div class="form-box">
             <h2 class="form-title">Se connecter</h2>
-            <form id="login-form" method="POST" action="../../index.php">
+            <form id="login-form" method="POST" action="http://localhost:8081/youdemy/index.php?route=login" >
                 <div class="form-group">
                     <label for="login-email">Email</label>
                     <input  name="email" id="email" type="email" id="login-email" required>
@@ -124,7 +124,7 @@
                     <label for="login-password">Mot de passe</label>
                     <input  name="password" id="password" type="password" id="login-password" required>
                 </div>
-                <button  name ="submit" type="submit" value = "login" class="submit-btn"><a href="../app/controller/UtilisateurControllers"></a>Se connecter</button>
+                <button  name ="submit" type="submit" value = "login" class="submit-btn">Se connecter</button>
                 <div class="form-footer">
                     <p>Pas encore de compte ? <a href="./register.php">S'inscrire</a></p>
                 </div>

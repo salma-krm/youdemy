@@ -15,9 +15,6 @@ class AuthController
     {
         $_SESSION["message_error"] = "email deja exist";
         $user = new Utilisateur();
-        // var_dump($_POST['submit']);
-        // die();
-
         if (isset($_POST['submit'])){
             if ($user->checkEmail($_POST["email"])) {
                 header('location:http://localhost:8081/youdemy/app/view/register.php');
@@ -32,7 +29,29 @@ class AuthController
             var_dump($role);
             $user->setRole($role);
             $user->create();
+            header('location:http://localhost:8081/youdemy/app/view/login.php');
+
         }
+    }
+    public function login()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $user = new Utilisateur();
+            $user = $user->checkEmail($email);
+            if($user &&  $user->getPassword() == $password) {
+                $_SESSION["authUser"] = $user;
+                header('location:./?route=dashboard');
+                die;
+            }
+        }
+
+        header('location:./?route=login');
+
+
+
+
     }
     
     }

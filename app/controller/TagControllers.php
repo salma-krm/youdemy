@@ -24,7 +24,8 @@ class TagControllers
             $this->tagmodal->setName($_POST['nom']);
             $this->tagmodal->setDescription($_POST['description']);
             $this->tagmodal->create();
-            header('location:./app/view/Tag.php');
+            header('location:./?route=tag');
+            
         }
     }
     public function delete()
@@ -32,7 +33,7 @@ class TagControllers
         if (isset($_GET['id'])) {
             $this->tagmodal->delete($_GET['id']);
 
-            header('location:./app/view/Tag.php');
+            header('location:./?route=tag');
         }
 
     }
@@ -45,8 +46,18 @@ class TagControllers
             $this->tagmodal->setId($_POST['id']);
             $this->tagmodal->setDescription($_POST['description']);
             $this->tagmodal->update();
-            header('location:./app/view/Tag.php');
+            header('location:./?route=tag');
         }
+    }
+
+    public function tag()
+    {
+        $cat = new TagControllers();
+        $tags = $cat->findAll();
+        ob_start();
+        include "./app/view/Tag.php";
+        $body = ob_get_clean();
+        include "./app/view/nav.php";
     }
 }
 
