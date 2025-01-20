@@ -2,6 +2,7 @@
 
 use app\controller\CoursControllers;
 use app\Controller\DashboardController;
+use app\controller\statisticControllers;
 use app\controller\TagControllers;
 use app\controller\UtilisateurControllers;
 require 'vendor/autoload.php';
@@ -90,14 +91,15 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
             break;
 
         case "tag":
-            $controller = new TagControllers();
-            $controller->tag();
+            $tag = new TagControllers();
+            $tag->tag();
             break;
         case "deletetag":
             $controller = new TagControllers();
             $controller->delete();
             break;
-         
-        
+        case"statistic":
+            $statistic= new statisticControllers();
+            $statistic->total();  
     }
 }

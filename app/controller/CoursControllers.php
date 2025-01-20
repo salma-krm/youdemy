@@ -58,6 +58,8 @@ class CoursControllers
         $body = ob_get_clean();
         include "./app/view/nav.php";
     }
+   
+
 }
 
 

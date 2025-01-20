@@ -196,6 +196,16 @@ class Cours
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function getTotalCours(){
+    $query="SELECT 
+    COUNT(*) as total_count FROM cours";
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+    
+    
+
+    }
 }
 
 ?>

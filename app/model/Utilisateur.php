@@ -126,12 +126,9 @@ class Utilisateur{
 }   
     public function update () {
         
-    $query= "UPDATE utilisateurs SET firstname = :firtsname, lastname=:lastname,email=:email,password=:password WHERE id = :id";
+    $query= "UPDATE utilisateurs SET status = :status,WHERE id = :id";
     $stmt = Database::getInstance()->getConnection()->prepare($query);
-    $stmt->bindParam(":firstname", $this->firstname);
-    $stmt->bindParam(":lastname", $this->lastname);
-    $stmt->bindParam(":email", $this->email);
-    $stmt->bindParam(":password", $this->password);
+    $stmt->bindParam(":password", $this->statut);
     $stmt->bindParam("id", $this->id);
      return $stmt->execute();
 

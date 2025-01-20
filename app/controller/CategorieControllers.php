@@ -12,8 +12,8 @@ class CategorieControllers
     }
     public function findAll()
     {
-        $cours = $this->CategorieModel->findAll();
-        return $cours;
+        $cats = $this->CategorieModel->findAll();
+        return $cats;
     }
     public function create()
     {

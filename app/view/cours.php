@@ -36,20 +36,20 @@
                         <?php foreach ($courses as $index => $cours): ?>
                             <tr>
                                 <td><?= $index + 1 ?></td>
-                                <td><?= htmlspecialchars($cours->getTitre()) ?></td>
-                                <td><?= htmlspecialchars($cours->getcontenu()) ?></td>
-                                <td><?= htmlspecialchars($cours->getDescription()) ?></td>
-                                <td><?= htmlspecialchars($cours->cat) ?></td>
+                                <td><?= ($cours->getTitre()) ?></td>
+                                <td><?= ($cours->getcontenu()) ?></td>
+                                <td><?= ($cours->getDescription()) ?></td>
+                                <td><?= ($cours->cat) ?></td>
                                 <td>
                                     <?php if (!empty($cours->getTag())): ?>
                                         <?php foreach ($cours->getTag() as $tag): ?>
-                                            <span class="badge bg-primary"><?= htmlspecialchars($tag->getName()) ?></span>
+                                            <span class="badge bg-primary"><?= ($tag->getName()) ?></span>
                                         <?php endforeach; ?>
                                     <?php else: ?>
                                         <span>Aucun Tag</span>
                                     <?php endif; ?>
                                 </td>
-                                <td><?= htmlspecialchars($cours->user) ?></td>
+                                <td><?= ($cours->user) ?></td>
                                 <td>
                                     <!-- Actions -->
                                     <button class="btn btn-sm btn-square btn-neutral text-danger-hover"

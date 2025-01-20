@@ -72,10 +72,15 @@
                                                 <td>
                                                     <?php echo ($userr->status); ?>
                                                 </td>
-                                                <td class="text-end">
+                                                <td class="text-end d-flex">
+                                                <button class="btn btn-sm btn-square btn-neutral text-danger-hover"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal<?= $userr->id ?>">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </button>
                                                 <form method="post" action="?route=deleteuser">
                                                 <input type="hidden" name="id" value="<?= $userr->id ?>">
-                                                <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                                <button class="btn "><i class="bi bi-trash"></i></button>
                                                  </form>
                                                 </td>
 
