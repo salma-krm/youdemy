@@ -72,6 +72,8 @@
                                     <?php endforeach; ?>
                                 </div>
                             </table>
+ <!--  modifier une categories -->
+
                             <?php
                             foreach ($cats as $categorie) {
                                 ?>

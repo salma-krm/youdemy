@@ -1,14 +1,144 @@
-
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youdemy - Plateforme d'apprentissage en ligne</title>
     <style>
-
-<>
         :root {
+            --gradient: linear-gradient(to left top, rgb(36, 138, 221) 10%, rgb(78, 47, 255) 90%) !important;
+        }
+
+        body {
+            background: #f4f7fc;
+            font-family: Arial, sans-serif;
+        }
+
+        .courses {
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .course-grid {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 2rem;
+            padding: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        .course-grid::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .course-grid::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .course-grid::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .col-md-4 {
+            min-width: 300px;
+            flex: 0 0 auto;
+        }
+
+        .card {
+            position: relative;
+            background: white;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 1rem;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.1);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .card-subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 5px 15px;
+            margin: 3px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            transition: transform 0.3s ease;
+        }
+
+        .tag:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            border-radius: 8px;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 47, 255, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(to left top, #ff4b4b, #ff6b6b);
+            border: none;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 75, 75, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .course-grid {
+                padding: 1rem;
+                gap: 1rem;
+            }
+        }
+
+        <> :root {
             --gradient: linear-gradient(to left top, rgb(36, 138, 221) 10%, rgb(78, 47, 255) 90%) !important;
         }
 
@@ -29,11 +159,7 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .card .card-img-top {
-            object-fit: cover;
-            height: 120px;
-            transition: transform 0.3s ease;
-        }
+
 
         .card-body {
             padding: 15px;
@@ -60,7 +186,7 @@
             border-radius: 20px;
             font-size: 0.9em;
         }
-    
+
         * {
             margin: 0;
             padding: 0;
@@ -76,6 +202,7 @@
             align-items: center;
             color: white;
         }
+
         .nav-center {
             flex: 1;
             max-width: 600px;
@@ -131,7 +258,7 @@
         .courses {
             padding: 3rem 2rem;
             text-align: center;
-            
+
         }
 
         .course-grid {
@@ -182,6 +309,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav>
         <div class="logo">Youdemy</div>
@@ -189,9 +317,23 @@
             <input type="search" class="search-bar" placeholder="Rechercher un cours...">
         </div>
         <div class="nav-links">
+            <?php
+                if(isset($_SESSION["authUser"])){
+            ?>
+            <a href="./?route=logout">logout</a>
+            <a href="./?route=mycours">my cours</a>
             
+
+            <?php
+                } else{
+            ?>
             <a href="./?route=login">s'inscrire</a>
             <a href="./?route=home">Connexion</a>
+
+            <?php
+                }
+                ?>
+
         </div>
     </nav>
 
@@ -201,46 +343,49 @@
         <button class="cta-button">Commencer maintenant</button>
     </section>
 
-    <section class="courses" >
+    <section class="courses">
         <h2>Cours populaires</h2>
-        <div class="course-grid d-flex justify-content-arround">
-        <div class="row g-4 d-flex justify-content-around w-50">
-                                        <?php foreach ($courses as $cours): ?>
-                                            <div class="col-md-4 " style=" width:300px;">
-                                                <div class="card shadow border-0">
-                                                    <img src="<?php echo ($cours->getPhoto()); ?>" class="card-img-top"
-                                                        alt="Course Image">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title"><?php echo ($cours->getTitre()); ?></h5>
-                                                        <h6 class="card-subtitle"><?php echo ($cours->getcontenu()); ?></h6>
-                                                        <p class="card-subtitle"><?php echo ($cours->getDescription()); ?></p>
-                                                        <p>Category: <strong><?php echo ($cours->cat); ?></strong></p>
-                                                        <h6>Tags: </h6>
-                                                        <?php if (!empty($cours->getTag())): ?>
-                                                            <?php foreach ($cours->getTag() as $key): ?>
-                                                                <span class="tag"><?php echo $key->getName(); ?></span>
-                                                            <?php endforeach; ?>
-                                                        <?php else: ?>
-                                                            <span>No Tags</span>
-                                                        <?php endif; ?>
-                                                        <p>Instructor: <strong><?php echo ($cours->user); ?></strong></p>
-                                                        <!-- Buttons with Icons -->
-                                                        <a href="#" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
-                                                        <a href="#" class="btn btn-danger" onclick="showSweetAlert()"><i
-                                                                class="bi bi-trash"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
+        <div class="course-grid">
+            <?php foreach ($courses as $cours): ?>
+                <div class="col-md-4">
+                    <div class="card shadow">
+                        <img src="<?php echo ($cours->getPhoto()); ?>" class="card-img-top" alt="Course Image">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo ($cours->getTitre()); ?></h5>
+                            <h6 class="card-subtitle"><?php echo ($cours->getcontenu()); ?></h6>
+                            <p class="card-subtitle"><?php echo ($cours->getDescription()); ?></p>
+                            <p>Category: <strong><?php echo ($cours->cat); ?></strong></p>
+                            <h6>Tags: </h6>
+                            <?php if (!empty($cours->getTag())): ?>
+                                <?php foreach ($cours->getTag() as $key): ?>
+                                    <span class="tag"><?php echo $key->getName(); ?></span>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <span>No Tags</span>
+                            <?php endif; ?>
+                            <p>Instructor: <strong><?php echo ($cours->user); ?></strong></p>
+                            <?php
+                            if (isset($_SESSION["authUser"])){
+                                ?>
+                                <form method="post" action="./?route=inscrire" class="mt-3">
+                                    <input type="hidden" name="cours_id" value="<?= $cours->getId() ?>">
+                                    <button class="btn btn-primary w-100">S'inscrire</button>
+                                </form>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </section>
 
     <footer>
         <p>&copy; 2025 Youdemy. Tous droits réservés.</p>
     </footer>
-    <script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
- <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

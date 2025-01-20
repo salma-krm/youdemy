@@ -41,17 +41,30 @@ class AuthController
             $user = new Utilisateur();
             $user = $user->checkEmail($email);
             if($user &&  $user->getPassword() == $password) {
+            
                 $_SESSION["authUser"] = $user;
-                header('location:./?route=dashboard');
+                if($user->getStatus() == 'active') {
+                 header('location:./?route=dashboard');
+                }
+                else 
+                    header('location:./?route=home');
                 die;
             }
         }
 
-        header('location:./?route=login');
+        header('location:http://localhost:8081/youdemy/?route=home');
 
 
 
 
+    }
+
+    public function logout()
+    {
+
+        session_destroy();
+        header('location:./?route=home');
+        exit();
     }
     
     }

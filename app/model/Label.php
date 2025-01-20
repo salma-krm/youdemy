@@ -1,9 +1,9 @@
 <?php
 namespace app\model;
 abstract class Label{
-    protected $id ;
-    protected $name ;
-    protected  $description ;
+    public $id ;
+    public $name ;
+    public  $description ;
 
     public function __construct(){}
     

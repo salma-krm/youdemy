@@ -5,6 +5,7 @@ use app\Controller\DashboardController;
 use app\controller\statisticControllers;
 use app\controller\TagControllers;
 use app\controller\UtilisateurControllers;
+use app\Model\Inscription;
 require 'vendor/autoload.php';
 session_start();
 use app\controller\CategorieControllers;
@@ -27,8 +28,8 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
     switch ($route) {
 
         case "register":
-            $controller = new AuthController();
-            $controller->register();
+                $controller = new AuthController();
+                $controller->register();
             break;
         case "login":
             $controller = new AuthController();
@@ -37,6 +38,10 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
         case "coursecreate":
             $controller = new CoursControllers();
             $controller->create();
+            break;
+        case "updateCours":
+            $controller = new CoursControllers();
+            $controller->update();
             break;
         case "deleteCourse":
             $controller = new CoursControllers();
@@ -62,14 +67,26 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
             $controller = new UtilisateurControllers();
             $controller->update();
             break;
+        case "inscrire":
+            $controller = new Inscription();
+            $controller->user_id = ($_SESSION["authUser"])->getId();
+            $controller->cours_id = $_POST["cours_id"];
+            $controller->insecrireInCpurs();
+            header("Location: ./");
+            break;
 
 
     }
 } else {
     switch ($route) {
+
         case "home":
             $controller = new HomeController;
             $controller->index();
+            break;
+        case "mesCours":
+            $controller = new HomeController;
+            $controller->mesCours();
             break;
         case "login":
             $controller = new AuthController();
@@ -105,5 +122,14 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
         case "statistic":
             $statistic = new statisticControllers();
             $statistic->total();
+            break;
+
+        case "logout":
+            $Logout = new AuthController();
+            $Logout->Logout();
+            break;
+
+
     }
 }
+

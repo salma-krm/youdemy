@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,26 +10,25 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.9.0/dist/css/coreui.min.css" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.9.0/dist/js/coreui.bundle.min.js"></script>
-     
+
 </head>
 <style>
     .status-active {
-            background: rgba(42, 232, 67, 0.46);
-            color: rgb(56, 207, 76);
-            padding: 2px;
-            border-radius: 20%;
-            
-        }
+        background: rgba(42, 232, 67, 0.46);
+        color: rgb(56, 207, 76);
+        padding: 2px;
+        border-radius: 20%;
 
-        .status-inactive {
-            background-color: #ffe6e6;
-            color: #cc0000;
-            padding: 2px;
-            border-radius: 20%;
+    }
 
-            
-        }
+    .status-inactive {
+        background-color: #ffe6e6;
+        color: #cc0000;
+        padding: 2px;
+        border-radius: 20%;
 
+
+    }
 </style>
 
 <body>
@@ -67,7 +65,7 @@
                             <a href="#" class="dropdown-item">Settings</a>
                             <a href="#" class="dropdown-item">Billing</a>
                             <hr class="dropdown-divider">
-                            <a href="./index.php" class="dropdown-item">Logout</a>
+                            <a href="./?route=logout" class="dropdown-item">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -86,7 +84,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                            <i class="bi bi-file-text"></i> Mes cours
+                                <i class="bi bi-file-text"></i> Mes cours
                                 <span
                                     class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
                             </a>
@@ -96,27 +94,34 @@
                                 <i class="bi bi-bookmarks"></i> Courses
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./?route=users">
-                                <i class="bi bi-people"></i> Users
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./?route=tag">
-                            <i class="bi bi-file-text"></i> Tag
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./?route=categorie">
-                                <i class="bi bi-file-text"></i> Categorie
-                            </a>
-                        </li>
+                        
+                        <?php
+                        if (isset($_SESSION["authUser"]) && ($_SESSION["authUser"])->role_id == 2) {
+                            ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./?route=users">
+                                    <i class="bi bi-people"></i> Users
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./?route=tag">
+                                    <i class="bi bi-file-text"></i> Tag
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./?route=categorie">
+                                    <i class="bi bi-file-text"></i> Categorie
+                                </a>
+                            </li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                     <hr class="navbar-divider my-5 opacity-20">
                     <div class="mt-auto"></div>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="./?route=dashboard">
+                            <a class="nav-link" href="./?route=logout">
                                 <i class="bi bi-box-arrow-left"></i> Logout
                             </a>
                         </li>
@@ -162,12 +167,12 @@
             </header>
 
 
-            <?=$body?>
-            
+            <?= $body ?>
+
         </div>
     </div>
 
-  
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>

@@ -81,11 +81,17 @@ public function findByID($id) {
     $stmt->bindParam(":id", $id);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_OBJ); 
-
-
-
-
 }
+public function getTotalCategorie(){
+    $query="SELECT 
+    COUNT(*) as total_count FROM categories";
+    $stmt = Database::getInstance()->getConnection()->prepare($query);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+    
+    
+
+    }
 }
 
 ?>

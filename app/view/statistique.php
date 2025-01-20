@@ -95,28 +95,46 @@
 
         <div class="stat-card students">
             <div class="card-header">
-                <span class="card-title">Étudiants Inscrits</span>
+                <span class="card-title">Categories</span>
                 <span class="icon">👥</span>
             </div>
-            <div class="stat-value">573</div>
-            <div class="stat-change positive">+48 cette semaine</div>
+            <?php if (!empty($statisticCategorie)): ?>
+                <?php foreach ($statisticCategorie as $cat): ?>
+                    <div class="stat-value"><?php echo($cat); ?></div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="stat-value">0</div>
+            <?php endif; ?>
+            <div class="stat-change positve">+48 cette semaine</div>
         </div>
 
         <div class="stat-card hours">
             <div class="card-header">
-                <span class="card-title">Heures Complétées</span>
+                <span class="card-title">tag</span>
                 <span class="icon">⏰</span>
             </div>
-            <div class="stat-value">1,428</div>
+            <?php if (!empty($statisticTag)): ?>
+                <?php foreach ($statisticTag as $tag): ?>
+                    <div class="stat-value"><?php echo($tag); ?></div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="stat-value">0</div>
+            <?php endif; ?>
             <div class="stat-change positive">+160 cette semaine</div>
         </div>
 
         <div class="stat-card success">
             <div class="card-header">
-                <span class="card-title">Taux de Réussite</span>
-                <span class="icon">🏆</span>
+                <span class="card-title">Utilisateur</span>
+                <span class="icon">👥</span>
             </div>
-            <div class="stat-value">89%</div>
+            <?php if (!empty($statisticUser)): ?>
+                <?php foreach ($statisticUser as $user): ?>
+                    <div class="stat-value"><?php echo($user); ?></div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="stat-value">0</div>
+            <?php endif; ?>
             <div class="stat-change positive">+2% depuis le dernier trimestre</div>
         </div>
     </div>

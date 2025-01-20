@@ -40,14 +40,14 @@ class TagControllers
     public function update()
     {
 
-        if ($_SERVER["REQUEST_METHOD"]) {
+     
 
             $this->tagmodal->setName($_POST['name']);
             $this->tagmodal->setId($_POST['id']);
             $this->tagmodal->setDescription($_POST['description']);
             $this->tagmodal->update();
             header('location:./?route=tag');
-        }
+        
     }
 
     public function tag()

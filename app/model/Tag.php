@@ -73,4 +73,14 @@ class Tag extends Label {
            $stmt->execute();
            return  $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getTotalTag(){
+        $query="SELECT 
+        COUNT(*) as total_count FROM tag";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+        
+    
+        }
 }
