@@ -58,7 +58,11 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
             $controller = new UtilisateurControllers();
             $controller->delete();
             break;
-        
+        case "updatestatus":
+            $controller = new UtilisateurControllers();
+            $controller->update();
+            break;
+
 
     }
 } else {
@@ -98,8 +102,8 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
             $controller = new TagControllers();
             $controller->delete();
             break;
-        case"statistic":
-            $statistic= new statisticControllers();
-            $statistic->total();  
+        case "statistic":
+            $statistic = new statisticControllers();
+            $statistic->total();
     }
 }

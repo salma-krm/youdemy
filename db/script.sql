@@ -62,3 +62,12 @@ CREATE TABLE courstags
     FOREIGN  key (id_tags) REFERENCES tag(id),
     FOREIGN  key (id_cours) REFERENCES cours (id) 
 );
+
+CREATE TABLE etudiant_cours 
+(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    id_cours int ,
+    id_etudiant int,
+    FOREIGN KEY (id_cours) REFERENCES  cours (id),
+    FOREIGN KEY (id_etudiant) REFERENCES  utilisateurs (id)  
+);

@@ -1,9 +1,4 @@
-<?php
-require dirname(__DIR__, 2) . '/vendor/autoload.php';
-use app\controller\CoursControllers;
-$cours = new CoursControllers();
-$courses = $cours->findAll();
-?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

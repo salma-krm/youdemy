@@ -13,6 +13,25 @@
     <script defer src="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.9.0/dist/js/coreui.bundle.min.js"></script>
      
 </head>
+<style>
+    .status-active {
+            background: rgba(42, 232, 67, 0.46);
+            color: rgb(56, 207, 76);
+            padding: 2px;
+            border-radius: 20%;
+            
+        }
+
+        .status-inactive {
+            background-color: #ffe6e6;
+            color: #cc0000;
+            padding: 2px;
+            border-radius: 20%;
+
+            
+        }
+
+</style>
 
 <body>
     <!-- Dashboard -->
@@ -29,7 +48,7 @@
                 </button>
                 <!-- Brand -->
                 <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
-                    <h3 class="text-success"><img src="" width="40"><span class="text-info">YOU</span>Demy</h3>
+                    <h3 class="text-danger"><span class="text-info">YOU</span>Demy</h3>
                 </a>
                 <!-- User menu (mobile) -->
                 <div class="navbar-user d-lg-none">
@@ -67,7 +86,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <i class="bi bi-chat"></i> Messages
+                            <i class="bi bi-file-text"></i> Mes cours
                                 <span
                                     class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
                             </a>
@@ -84,7 +103,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./?route=tag">
-                                <i class="bi bi-globe-americas"></i> Tag
+                            <i class="bi bi-file-text"></i> Tag
                             </a>
                         </li>
                         <li class="nav-item">

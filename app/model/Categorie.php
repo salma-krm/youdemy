@@ -78,11 +78,7 @@ public function findByID($id) {
     
     $query = "SELECT * FROM categories WHERE id = :id";
     $stmt = Database::getInstance()->getConnection()->prepare($query);
-    
-   
     $stmt->bindParam(":id", $id);
-    
-  
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_OBJ); 
 

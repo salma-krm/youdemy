@@ -37,7 +37,11 @@
                                         <th scope="col">email</th>
                                         <th scope="col">role</th>
                                         <th scope="col">description</th>
-                                        <th>statut</th>
+                                        <th scope="col">status</th>
+                                        <th scope="col"></th>
+
+
+                                       
                                         <th></th>
 
                                     </tr>
@@ -65,12 +69,13 @@
                                                     <?php echo ($userr->roleName); ?>
                                                 </td>
                                                 <td>
-                                                    <span class="badge badge-lg badge-dot">
+                                                    <span class=" badge-lg badge-dot">
                                                         <?php echo ($userr->roledescription); ?>
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <?php echo ($userr->status); ?>
+                                                    
+                                                    <td><span class="status-badge  <?= ($userr->status) === 'active' ? 'status-active' : 'status-inactive' ?>"><?= ($userr->status)?></span></td>
                                                 </td>
                                                 <td class="text-end d-flex">
                                                 <button class="btn btn-sm btn-square btn-neutral text-danger-hover"
@@ -87,6 +92,45 @@
                                             </tr>
                                         </tbody>
                                     <?php endforeach; ?>
+                                  <?php  foreach ($users as $userr) {
+                                ?>
+                                <div class="modal fade" id="exampleModal<?= ($userr->id); ?>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">update contact</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form name="player" id="addPlayr" method="post"
+                                                    action="http://localhost:8081/youdemy/?route=updatestatus&id=<?= ($userr->id); ?>">
+                                                    <div class="bg-light p-4 rounded shadow-sm">
+                                                        <h2 class="mb-4">Add categorie</h2>
+                                                        <input type="hidden" name="id" value="<?=$userr->id?>" >
+                                                       
+                                                        <div class="mb-3">
+                                                            <label for="rating" class="form-label">description</label>
+                                                            <input type="text" name="status" id="status"
+                                                                value="<?= ($userr->status); ?>" class="form-control"
+                                                                placeholder="Enter your description" required />
+                                                            <!-- <div id="ratingErr" class="text-danger"></div> -->
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" name="submit" class="btn btn-primary">Save
+                                                    changes</button>
+                                            </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
                                 </div>
                             </table>
                         </div>

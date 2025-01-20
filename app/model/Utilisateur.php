@@ -105,7 +105,7 @@ class Utilisateur{
 
 
    public function findAll() {
-        $query = "SELECT utilisateurs.id as id , status ,firstname, lastname, email, password, roleName, roledescription 
+        $query = "SELECT  utilisateurs.id as id , status ,firstname, lastname, email, password, roleName, roledescription 
         FROM utilisateurs LEFT JOIN roles ON utilisateurs.role_id = roles.id";
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->execute();
@@ -124,11 +124,10 @@ class Utilisateur{
     return $stmt->execute();
     
 }   
-    public function update () {
-        
-    $query= "UPDATE utilisateurs SET status = :status,WHERE id = :id";
+    public function update () { 
+    $query= "UPDATE utilisateurs SET status = :status WHERE id = :id";
     $stmt = Database::getInstance()->getConnection()->prepare($query);
-    $stmt->bindParam(":password", $this->statut);
+    $stmt->bindParam(":status", $this->statut);
     $stmt->bindParam("id", $this->id);
      return $stmt->execute();
 

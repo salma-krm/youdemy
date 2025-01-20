@@ -31,9 +31,16 @@ class UtilisateurControllers
             header('location:./?route=users');
         }
     }
+    public function update(){
+        if ($_SERVER["REQUEST_METHOD"]) {
+            $this->Utilisateurmodel->setStatus($_POST['status']);
+            $this->Utilisateurmodel->setId($_POST['id']);
+            $this->Utilisateurmodel->update();
+            header('location:./?route=users');
+        }
+    }
     public function user()
     {
-       
         $user = new UtilisateurControllers();
         $users = $user->findAll();
         ob_start();
