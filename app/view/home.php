@@ -328,7 +328,7 @@
                 } else{
             ?>
             <a href="./?route=login">s'inscrire</a>
-            <a href="./?route=home">Connexion</a>
+            <a href="./?route=signup">register</a>
 
             <?php
                 }
@@ -369,7 +369,7 @@
                                 ?>
                                 <form method="post" action="./?route=inscrire" class="mt-3">
                                     <input type="hidden" name="cours_id" value="<?= $cours->getId() ?>">
-                                    <button class="btn btn-primary w-100">S'inscrire</button>
+                                    <button  class="btn btn-danger w-100">S'inscrire</button>
                                 </form>
                             <?php
                             }

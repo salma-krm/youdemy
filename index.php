@@ -28,8 +28,8 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
     switch ($route) {
 
         case "register":
-                $controller = new AuthController();
-                $controller->register();
+            $controller = new AuthController();
+            $controller->register();
             break;
         case "login":
             $controller = new AuthController();
@@ -67,16 +67,32 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
             $controller = new UtilisateurControllers();
             $controller->update();
             break;
-        case "inscrire":
-            $controller = new Inscription();
-            $controller->user_id = ($_SESSION["authUser"])->getId();
-            $controller->cours_id = $_POST["cours_id"];
-            $controller->insecrireInCpurs();
-            header("Location: ./");
-            break;
+            case "inscrire":
+                $controller = new Inscription();
+            
+                $user_id=$_SESSION["authUser"]->getId() ;
+                $cours_id = $_POST["cours_id"];
+                $cours = $controller->checkExistingEnrollment($cours_id,$user_id);
+               
+            
+                if ($cours ==true) {
+                    echo "Le cours n'existe pas.";
+                    die;
+                  }else 
+                   $controller->setUser_id($_SESSION["authUser"]->getId());
+                    $controller->setCours_id($cours_id);
+                    $controller->insecrireInCpurs();
+                    header("Location: ./");
+                break;
+
+                }
+                    
+                    
+                
+            
 
 
-    }
+    
 } else {
     switch ($route) {
 
@@ -127,6 +143,15 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) == "post") {
         case "logout":
             $Logout = new AuthController();
             $Logout->Logout();
+            break;
+
+        case "signup":
+            $controller = new AuthController();
+            $controller->registerPage();
+            break;
+        case "EnseignantCours":
+            $controller = new HomeController();
+            $controller->EnseignantCours();
             break;
 
 

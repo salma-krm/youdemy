@@ -77,24 +77,37 @@
                                 <i class="bi bi-house"></i> Dashboard
                             </a>
                         </li>
+                        <?php
+                        if (isset($_SESSION["authUser"]) && ($_SESSION["authUser"])->role_id == 2) {
+                            ?>
                         <li class="nav-item">
                             <a class="nav-link" href="./?route=statistic">
                                 <i class="bi bi-bar-chart"></i> Analytics
                             </a>
                         </li>
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if (isset($_SESSION["authUser"]) && ($_SESSION["authUser"])->role_id == 1) {
+                            ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="?route=EnseignantCours">
                                 <i class="bi bi-file-text"></i> Mes cours
                                 <span
                                     class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
                             </a>
                         </li>
+                        <?php
+                        }
+                        ?>
                         <li class="nav-item">
                             <a class="nav-link" href="./?route=dashboard">
                                 <i class="bi bi-bookmarks"></i> Courses
                             </a>
                         </li>
-                        
+                       
+
                         <?php
                         if (isset($_SESSION["authUser"]) && ($_SESSION["authUser"])->role_id == 2) {
                             ?>

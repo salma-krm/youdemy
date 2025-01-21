@@ -26,10 +26,15 @@ class HomeController
         include "./app/view/home.php";
        
     }
-    public function mesCours()
+    public function EnseignantCours()
     {
          $id = ($_SESSION["authUser"])->getId();
-        $courses =   $this->Coursmodel->findInscriCours($id);    
-        var_dump($courses) ;
+        //  var_dump($id);
+        //  die;
+        $courses =   $this->Coursmodel->findInscriCours($id); 
+        ob_start();
+        include "./app/view/CoursesInsecrir.php";
+        $body = ob_get_clean();
+        include "./app/view/nav.php";
     }
 }

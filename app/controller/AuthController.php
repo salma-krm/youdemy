@@ -11,13 +11,19 @@ class AuthController
     {
         include "./app/view/login.php";
     }
+
+    public function registerPage(){
+        include "./app/view/register.php";
+    }
+
     public function register()
     {
-        $_SESSION["message_error"] = "email deja exist";
+       
         $user = new Utilisateur();
-        if (isset($_POST['submit'])){
+        if (isset($_POST['submit'])) {
             if ($user->checkEmail($_POST["email"])) {
-                header('location:http://localhost:8081/youdemy/app/view/register.php');
+                $_SESSION["message_error"] = "email deja exist";
+                header('location:http://localhost:8081/youdemy/?route=signup');
                 exit;
             }
             $user->setFirstName($_POST["firstname"]);
@@ -25,11 +31,11 @@ class AuthController
             $user->setEmail($_POST["email"]);
             $user->setPassword($_POST["password"]);
             $role = new Role();
-            $role= $role->findByName($_POST['role']);
+            $role = $role->findByName($_POST['role']);
             var_dump($role);
             $user->setRole($role);
             $user->create();
-            header('location:http://localhost:8081/youdemy/app/view/login.php');
+            header('location:http://localhost:8081/youdemy/?route=login');
 
         }
     }
@@ -40,19 +46,18 @@ class AuthController
             $password = $_POST['password'];
             $user = new Utilisateur();
             $user = $user->checkEmail($email);
-            if($user &&  $user->getPassword() == $password) {
-            
+            if ($user && $user->getPassword() == $password) {
+
                 $_SESSION["authUser"] = $user;
-                if($user->getStatus() == 'active') {
-                 header('location:./?route=dashboard');
-                }
-                else 
+                if ($user->getStatus() == 'active' && $user->role_id != 3) {
+                    header('location:./?route=dashboard');
+                } else
                     header('location:./?route=home');
                 die;
             }
         }
 
-        header('location:http://localhost:8081/youdemy/?route=home');
+        header('location:http://localhost:8081/youdemy/?route=login');
 
 
 
@@ -66,5 +71,5 @@ class AuthController
         header('location:./?route=home');
         exit();
     }
-    
-    }
+
+}

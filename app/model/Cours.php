@@ -13,7 +13,7 @@ class Cours
     private string $contenu = "";
     private Categorie $categorie;
     private array $tags = [];
-    private Utilisateur $etudiants;
+    private array $etudiants;
     private Utilisateur $enseignant;
 
 
@@ -172,12 +172,11 @@ class Cours
         return $cours;
     }
 
-    function findInscriCours($id)
-    {
+    function findInscriCours($id) {
         $query = 'select  cours.id as id ,cours.titre  as titre ,cours.photo as photo ,cours.description as description ,
         cours.contenu as contenu , utilisateurs.firstname as user , categories.name as cat 
          FROM cours join utilisateurs  on 
-         cours.id_enseignant=utilisateurs.id join categories  on cours.id_categorie=categories.id join etudiant_cours on etudiant_cours.id_etudiant =  utilisateurs.id where etudiant_cours.id_etudiant = :id    ; ';
+         cours.id_enseignant=utilisateurs.id join categories  on cours.id_categorie=categories.id join etudiant_cours on etudiant_cours.id_etudiant =  utilisateurs.id where etudiant_cours.id_etudiant = :id ; ';
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -193,15 +192,11 @@ class Cours
         return $cours;
     }
 
+
     public function update()
     {
         $categorieId = $this->categorie->getId();
         $query = "UPDATE cours SET photo = :photo, titre = :titre, description = :description, contenu = :contenu, id_categorie = :id_categorie WHERE id = :id";
-
-        // Debugging query (optional)
-        // var_dump($query);
-
-        // Update the `cours` table
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->bindParam(":photo", $this->photo);
         $stmt->bindParam(":titre", $this->titre);
@@ -257,6 +252,9 @@ class Cours
 
 
 
+    }
+    public function searchParName(){
+        $query = "";
     }
 
 }

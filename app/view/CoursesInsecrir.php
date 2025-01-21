@@ -126,9 +126,11 @@
                                         <div class="mb-3">
                                             <label class="form-label">Tags</label>
                                             <select class="form-multi-select form-select" name="tags[]" multiple>
-                                            <?php foreach ($tags as $tag): ?>
-                                    <option value="<?= $tag->id ?>"><?= $tag->name ?></option>
-                                <?php endforeach; ?>
+                                                <?php foreach ($tags as $tag): ?>
+                                                    <option value="<?= $tag->id ?>" <?= in_array($tag->id, array_map(fn($t) => $t->id, $cours->getTag())) ? 'selected' : '' ?>>
+                                                        <?= $tag->name ?>
+                                                    </option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                         <div class="modal-footer">
